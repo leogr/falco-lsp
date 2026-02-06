@@ -2,7 +2,7 @@
  * Falco Rules VS Code Extension
  *
  * Provides comprehensive language support for Falco Security Rules including:
- * - Syntax highlighting for .falco.yaml and .falco.yml files
+ * - Syntax highlighting for .falco.yaml, .falco.yml, *_rules.yaml, and *_rules.yml files
  * - Intelligent code completion for rules, macros, lists, and fields
  * - Hover information for Falco fields and symbols
  * - Go-to-definition for macros and lists
@@ -135,9 +135,20 @@ function registerCommands(context: ExtensionContext): void {
       outputChannel.appendLine('='.repeat(80));
       outputChannel.appendLine('');
 
-      const yamlFiles = await workspace.findFiles('**/*.falco.yaml');
-      const ymlFiles = await workspace.findFiles('**/*.falco.yml');
-      const allFiles = [...yamlFiles, ...ymlFiles];
+      const falcoYamlFiles = await workspace.findFiles('**/*.falco.yaml');
+      const falcoYmlFiles = await workspace.findFiles('**/*.falco.yml');
+      const rulesYamlFiles = await workspace.findFiles('**/*_rules.yaml');
+      const rulesYmlFiles = await workspace.findFiles('**/*_rules.yml');
+
+      // Deduplicate by fsPath (a file like "my_rules.falco.yaml" matches both patterns)
+      const seen = new Set<string>();
+      const allFiles: Uri[] = [];
+      for (const file of [...falcoYamlFiles, ...falcoYmlFiles, ...rulesYamlFiles, ...rulesYmlFiles]) {
+        if (!seen.has(file.fsPath)) {
+          seen.add(file.fsPath);
+          allFiles.push(file);
+        }
+      }
 
       if (allFiles.length === 0) {
         outputChannel.appendLine('❌ No Falco rules files found in workspace');
@@ -418,6 +429,8 @@ async function startLanguageServer(context: ExtensionContext): Promise<void> {
       fileEvents: [
         workspace.createFileSystemWatcher('**/*.falco.yaml'),
         workspace.createFileSystemWatcher('**/*.falco.yml'),
+        workspace.createFileSystemWatcher('**/*_rules.yaml'),
+        workspace.createFileSystemWatcher('**/*_rules.yml'),
       ],
     },
     outputChannel,
