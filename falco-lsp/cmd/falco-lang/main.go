@@ -34,10 +34,6 @@ import (
 )
 
 const (
-	// File extensions.
-	extYAML = ".yaml"
-	extYML  = ".yml"
-
 	// Severity levels.
 	severityError   = "error"
 	severityWarning = "warning"
@@ -494,26 +490,23 @@ func expandPatterns(patterns []string) ([]string, error) {
 }
 
 // isFalcoFile returns true if the file is a Falco rules file.
-// Falco file extension constants for isFalcoFile.
+// Recognized patterns: *.falco.yaml, *.falco.yml, *_rules.yaml, *_rules.yml.
+//
+// Falco file extension/suffix constants for isFalcoFile.
 const (
-	extFalcoYAML = ".falco.yaml"
-	extFalcoYML  = ".falco.yml"
+	extFalcoYAML    = ".falco.yaml"
+	extFalcoYML     = ".falco.yml"
+	suffixRulesYAML = "_rules.yaml"
+	suffixRulesYML  = "_rules.yml"
 )
 
 func isFalcoFile(path string) bool {
-	ext := filepath.Ext(path)
 	base := filepath.Base(path)
 
-	// Check common Falco extensions
-	if ext == extYAML || ext == extYML {
-		// Check if it's a .falco.yaml or .falco.yml
-		if len(base) > len(extFalcoYAML) && base[len(base)-len(extFalcoYAML):] == extFalcoYAML {
-			return true
-		}
-		if len(base) > len(extFalcoYML) && base[len(base)-len(extFalcoYML):] == extFalcoYML {
-			return true
-		}
-		// Also accept any .yaml/.yml file (user might have different naming)
+	if strings.HasSuffix(base, extFalcoYAML) || strings.HasSuffix(base, extFalcoYML) {
+		return true
+	}
+	if strings.HasSuffix(base, suffixRulesYAML) || strings.HasSuffix(base, suffixRulesYML) {
 		return true
 	}
 	return false

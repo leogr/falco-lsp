@@ -7,51 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- Refactored LSP server into modular architecture for better maintainability
-- Improved diagnostics refresh - errors now properly clear when fixed
-- Enhanced code completion with better context awareness
-- Updated extension to support both `.falco` and `.falco.yaml` files consistently
-
-### Fixed
-
-- Fixed stale diagnostics not clearing when errors are corrected
-- Fixed duplicate diagnostics appearing after multiple edits
-- Fixed completion items duplicating dashes when triggered after `-`
-
-### Removed
-
-- Removed deprecated `falco.convertDslToYaml` command
-
-## [0.2.3] - 2024-01-15
+## [0.1.1] - 2026-02-06
 
 ### Added
 
-- Initial public release
-- Syntax highlighting for Falco rules
-- Code completion for rules, macros, lists, and fields
-- Hover information for Falco fields
-- Go-to-definition for macros and lists
-- Real-time diagnostics and validation
-- JSON Schema validation for YAML files
+- First-class support for `*_rules.yaml` and `*_rules.yml` files (official Falco naming convention, e.g., `falco_rules.yaml`, `k8s_audit_rules.yaml`)
+- VS Code activation, language detection, schema validation, file watching, and workspace validation for `*_rules.yaml`/`*_rules.yml`
+- CLI directory scanning picks up `*_rules.yaml`/`*_rules.yml` alongside `*.falco.yaml`/`*.falco.yml`
+
+### Changed
+
+- CLI `isFalcoFile()` no longer matches generic `.yaml`/`.yml` files; only recognized Falco patterns are matched
+
+## [0.1.0] - 2026-02-06
+
+### Added
+
+- Syntax highlighting for Falco rules (`.falco.yaml`, `.falco.yml`)
+- Intelligent code completion for rules, macros, lists, fields, operators, priorities, and sources
+- Hover information for Falco fields and user-defined symbols
+- Go-to-definition for macros, lists, and rules
+- Find references for macros and lists across files
+- Document symbols outline
+- Real-time diagnostics and semantic validation
+- JSON Schema validation for Falco YAML files
+- Code formatting with configurable indentation
 - Snippets for common rule patterns
+- Workspace-wide validation command
+- Cross-platform Go language server (Linux, macOS, Windows)
+- CLI tool (`falco-lang`) with validate, format, and lsp commands
 
-### Technical
-
-- Go-based language server with LSP protocol
-- Full support for `.falco.yaml` and `.falco.yml` files
-- Cross-platform binary support (Linux, macOS, Windows)
-
----
-
-## Version History
-
-### Pre-release versions
-
-Development versions prior to 0.2.3 were internal releases for testing and validation.
-
----
-
-[Unreleased]: https://github.com/c2ndev/falco-lsp/compare/v0.2.3...HEAD
-[0.2.3]: https://github.com/c2ndev/falco-lsp/releases/tag/v0.2.3
+[Unreleased]: https://github.com/c2ndev/falco-lsp/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/c2ndev/falco-lsp/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/c2ndev/falco-lsp/releases/tag/v0.1.0

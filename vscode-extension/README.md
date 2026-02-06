@@ -1,7 +1,7 @@
 # Falco Rules for Visual Studio Code
 
 <p align="center">
-  <img src="icons/falco.png" alt="Falco" width="128" height="128">
+  <img src="https://raw.githubusercontent.com/c2ndev/falco-lsp/main/vscode-extension/icons/falco.png" alt="Falco" width="128" height="128">
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 ### 🎨 Syntax Highlighting
 
-Rich syntax highlighting for Falco rules files (`.falco.yaml`, `.falco.yml`) with support for:
+Rich syntax highlighting for Falco rules files (`.falco.yaml`, `.falco.yml`, `*_rules.yaml`, `*_rules.yml`) with support for:
 
 - Rule, macro, and list definitions
 - Condition expressions with operators
@@ -84,7 +84,7 @@ Quick templates for common patterns:
 
 ### 🔧 JSON Schema Validation
 
-Automatic schema validation for `.falco.yaml` and `.falco.yml` files ensures structural correctness and validates:
+Automatic schema validation for `.falco.yaml`, `.falco.yml`, `*_rules.yaml`, and `*_rules.yml` files ensures structural correctness and validates:
 
 - Required and optional properties for rules, macros, and lists
 - Correct data types (strings, booleans, arrays, objects)
@@ -172,10 +172,12 @@ The extension provides:
 
 ## Supported File Types
 
-| Extension     | Language ID  | Description                |
-| ------------- | ------------ | -------------------------- |
-| `.falco.yaml` | `falco-yaml` | Falco rules in YAML format |
-| `.falco.yml`  | `falco-yaml` | Falco rules in YAML format |
+| Pattern         | Language ID  | Description                          |
+| --------------- | ------------ | ------------------------------------ |
+| `*.falco.yaml`  | `falco-yaml` | Falco rules in YAML format           |
+| `*.falco.yml`   | `falco-yaml` | Falco rules in YAML format           |
+| `*_rules.yaml`  | `falco-yaml` | Official Falco rules naming convention |
+| `*_rules.yml`   | `falco-yaml` | Official Falco rules naming convention |
 
 ---
 

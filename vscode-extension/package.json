@@ -37,7 +37,9 @@
   },
   "activationEvents": [
     "workspaceContains:**/*.falco.yaml",
-    "workspaceContains:**/*.falco.yml"
+    "workspaceContains:**/*.falco.yml",
+    "workspaceContains:**/*_rules.yaml",
+    "workspaceContains:**/*_rules.yml"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -51,6 +53,10 @@
         "extensions": [
           ".falco.yaml",
           ".falco.yml"
+        ],
+        "filenamePatterns": [
+          "*_rules.yaml",
+          "*_rules.yml"
         ],
         "configuration": "./language-configuration-yaml.json",
         "icon": {
@@ -167,7 +173,9 @@
       {
         "fileMatch": [
           "*.falco.yaml",
-          "*.falco.yml"
+          "*.falco.yml",
+          "*_rules.yaml",
+          "*_rules.yml"
         ],
         "url": "./schemas/falco-rules.schema.json"
       }
